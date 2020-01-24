@@ -17,7 +17,7 @@ module.exports = {
       resolve: `gatsby-source-strapi`,
       options: {
         apiURL: process.env.DEPLOY_URL
-            ? 'https://laska-blog-test.herokuapp.com/'
+            ? 'https://laska-blog-test.herokuapp.com'
             : 'http://localhost:1337',
         contentTypes: [
           'article',
