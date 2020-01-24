@@ -1,0 +1,18 @@
+header {
+  background: #fdf9f3;
+}
+
+header li a {
+  color: #000;
+  text-decoration: none;
+  border: 1px solid;
+  padding: 6px 12px;
+}
+
+header li a.active, header li a:hover {
+  box-shadow: 1px 1px 1px #000000;
+}
+
+header li {
+  margin: 0 10px 0 0;
+}

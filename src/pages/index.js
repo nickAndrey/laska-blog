@@ -1,21 +1,55 @@
 import React from "react"
-import { Link } from "gatsby"
+import {Link, graphql} from "gatsby"
+import Img from "gatsby-image"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
 
-const IndexPage = () => (
+const IndexPage = ({data}) => (
   <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
+    {data.allStrapiArticle.edges.map(item => (
+      <div key={item.node.id} style={{
+        display: `grid`,
+        gridTemplateColumns: `1fr 2fr`,
+        gridGap: `15px`,
+        marginBottom: `40px`
+      }}>
+        <h4 style={{
+          gridColumn: `1/-1`,
+          margin: `0`
+        }}><Link to={`/${item.node.id}`}>{item.node.title}</Link></h4>
+        <Link to={`/${item.node.id}`}>
+          <Img fluid={item.node.image.childImageSharp.fluid}/>
+        </Link>
+        <p>{item.node.description} <Link to={`/${item.node.id}`}>Continue reading</Link></p>
+      </div>
+    ))}
   </Layout>
 )
 
-export default IndexPage
+export default IndexPage;
+
+export const pageQuery = graphql`
+  query IndexQuery {
+    allStrapiArticle {
+      edges {
+        node {
+          author {
+            id
+            username
+          }
+          content
+          id
+          title
+          image {
+            childImageSharp {
+              fluid(maxWidth: 1000, quality: 100) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
+          description
+        }
+      }
+    }
+  }
+`;
